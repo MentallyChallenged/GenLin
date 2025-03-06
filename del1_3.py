@@ -40,13 +40,6 @@ kryss_tabell2 = pd.crosstab(y,
     margins=True,
     margins_name="Totalt")
 
-kryss_tabell3 = pd.crosstab(y,
-    [dataframe[var] for var in variabler],
-    rownames=['isAlive'], 
-    colnames=variabler,
-    dropna=False,
-    margins=True,
-    margins_name="Totalt")
 
 # Print formatted tables
 print("Cross-tabulation for isNoble, male, and age_deler:")
