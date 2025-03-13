@@ -1,0 +1,9 @@
+Modell,Inkluderte Variabler,Devians,Antall Parametre,AIC
+Modell med 1 variabler,['book4'],1520.61132751201,2,1524.61132751201
+Modell med 2 variabler,"['book4', 'age_86+']",1490.727491710921,3,1496.727491710921
+Modell med 3 variabler,"['book4', 'age_86+', 'male']",1463.5390711609698,4,1471.5390711609698
+Modell med 4 variabler,"['book4', 'age_86+', 'male', 'house_House Targaryen']",1444.0442722086648,5,1454.0442722086648
+Modell med 5 variabler,"['book4', 'age_86+', 'male', 'house_House Targaryen', ""house_Night's Watch""]",1423.0974080112078,6,1435.0974080112078
+Modell med 6 variabler,"['book4', 'age_86+', 'male', 'house_House Targaryen', ""house_Night's Watch"", 'house_House Greyjoy']",1416.920743191135,7,1430.920743191135
+Modell med 7 variabler,"['book4', 'age_86+', 'male', 'house_House Targaryen', ""house_Night's Watch"", 'house_House Greyjoy', 'isNoble']",1410.7127904333374,8,1426.7127904333374
+Modell med 8 variabler,"['book4', 'age_86+', 'male', 'house_House Targaryen', ""house_Night's Watch"", 'house_House Greyjoy', 'isNoble', 'house_House Frey']",1409.9905401540736,9,1427.9905401540736
