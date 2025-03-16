@@ -86,5 +86,10 @@ for feature in final_features:
     if feature not in output.columns:
         output[feature] = 0  # Fyll manglende kolonner med 0
 
+# Velg kun de 7 funksjonene og prediksjonen for å lagre i CSV
+output_final = output[final_features + ["Predicted_isAlive"]]
+
 # Skriv ut resultatene
-print(output[final_features + ["Predicted_isAlive"]])
+print(output_final)
+output_final.to_csv("prediksjoner.csv", index=False)
+output_final.to_excel("prediksjoner.xlsx", index=False)
