@@ -9,7 +9,6 @@ dataframe = pd.DataFrame(data)
 
 #bruker get dummies fra pandas til å konvertere string data til binæere kategorier 
 dataframe_kat = pd.get_dummies(dataframe, columns=["title", "house"], drop_first=True)
-#print(f"One-Hot Encoded Data using Pandas:\n{dataframe_kat}\n")
 
 variabler = ["isNoble", "male", "age"]
 

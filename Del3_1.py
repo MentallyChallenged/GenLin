@@ -2,29 +2,23 @@ import numpy as np
 import statsmodels.api as sm
 import pandas as pd
 
-# Last inn treningsdataene
 train_fil = "game_of_thrones_train.csv"
 train_dataframe = pd.read_csv(train_fil)
 
-# Last inn testdataene
 test_fil = "game_of_thrones_test.csv"
 test_dataframe = pd.read_csv(test_fil)
 
-# Funksjon for å forberede dataene (dummyvariabler, aldersgrupper, etc.)
 def prepare_data(dataframe, train_columns=None):
-    # Dummyvariabler for "title" og "house"
+    # Dummyvariabler for title og house
     title_dummies = pd.get_dummies(dataframe["title"], prefix="title", drop_first=False)
     house_dummies = pd.get_dummies(dataframe["house"], prefix="house", drop_first=False)
 
-    # Del opp alder i grupper
     age_delt = [0, 15, 25, 40, 60, 85, np.inf]
     age_label = ["1-15", '16-25', '26-40', '41-60', '61-85', '86+']
     dataframe["age_deler"] = pd.cut(dataframe["age"], bins=age_delt, labels=age_label, right=False)
 
-    # Lag dummyvariabler for alder
     age_dummies = pd.get_dummies(dataframe["age_deler"], prefix="age", drop_first=True)
 
-    # Kombiner alle variablene til en DataFrame
     X = pd.concat([
         dataframe[["isNoble", "male"]],
         title_dummies,
@@ -37,8 +31,8 @@ def prepare_data(dataframe, train_columns=None):
     if train_columns is not None:
         missing_columns = set(train_columns) - set(X.columns)
         for col in missing_columns:
-            X[col] = 0  # Fyll manglende kolonner med 0
-        X = X[train_columns]  # Sorter kolonnene i riktig rekkefølge
+            X[col] = 0  # Fyller manglende kolonner med 0
+        X = X[train_columns]  # Sorterer kolonnenene i riktige rekkefølger
 
     return X
 
@@ -86,10 +80,9 @@ for feature in final_features:
     if feature not in output.columns:
         output[feature] = 0  # Fyll manglende kolonner med 0
 
-# Velg kun de 7 funksjonene og prediksjonen for å lagre i CSV
+# Velger kun de 7 funksjonene og prediksjonen for å lagre i CSV
 output_final = output[final_features + ["Predicted_isAlive"]]
 
-# Skriv ut resultatene
 print(output_final)
 output_final.to_csv("prediksjoner.csv", index=False)
 output_final.to_excel("prediksjoner.xlsx", index=False)

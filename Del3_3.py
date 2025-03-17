@@ -2,16 +2,13 @@ import numpy as np
 import statsmodels.api as sm
 import pandas as pd
 
-# Last inn treningsdataene
 train_fil = "game_of_thrones_train.csv"
 train_dataframe = pd.read_csv(train_fil)
 
-# Funksjon for å forberede dataene (dummyvariabler, aldersgrupper, etc.)
 def prepare_data(dataframe):
     # Dummyvariabler for "house"
     house_dummies = pd.get_dummies(dataframe["house"], prefix="house", drop_first=False)
 
-    # Del opp alder i grupper
     age_delt = [0, 15, 25, 40, 60, 85, np.inf]
     age_label = ["1-15", '16-25', '26-40', '41-60', '61-85', '86+']
     dataframe["age_deler"] = pd.cut(dataframe["age"], bins=age_delt, labels=age_label, right=False)
@@ -19,7 +16,6 @@ def prepare_data(dataframe):
     # Lag dummyvariabler for alder
     age_dummies = pd.get_dummies(dataframe["age_deler"], prefix="age", drop_first=True)
 
-    # Kombiner alle variablene til en DataFrame
     X = pd.concat([
         dataframe[["isNoble", "male", "book4"]],
         house_dummies,

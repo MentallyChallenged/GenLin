@@ -24,7 +24,7 @@ def df_to_latex(df, caption, label):
     latex_table = f"\\begin{{table}}[h]\n\\centering\n{latex_table}\n\\caption{{{caption}}}\n\\label{{{label}}}\n\\end{{table}}"
     return latex_table
 
-# for å lage individuell kryss_tabell for alle variabelene 
+# for å lage individuell kryss tabell for alle variabelene 
 for var in variabler:
     kryss_tabell = pd.crosstab(y, dataframe[var],
         rownames=['isAlive'], 
@@ -56,16 +56,16 @@ for var in variabler2:
     print(f"\nLaTeX code for {var} table:")
     print(latex_table)
     
-# Extract dummy variable columns for "title" and "house"
+# uthenter dummy variabel kollonne for tittel og house
 title_dummies = [col for col in dataframe_kat.columns if col.startswith('title_')]
 house_dummies = [col for col in dataframe_kat.columns if col.startswith('house_')]
 
-# Function to create cross-tabulations for variables with more than 20 occurrences
+# Funksjon til å danne krysstablene med over 20 tilfeller 
 def create_crosstabs_for_significant_vars(dummies):
     for var in dummies:
-        # Convert boolean values to numeric
+        # konvertere boolean verdier til tall 
         data_numeric = dataframe_kat[var].astype(int)
-        # Check if the number of occurrences of the value 1 is over 20
+        # Skjekke om det er over 20 folk 
         if data_numeric.sum() > 20:
             kryss_tabell = pd.crosstab(y, dataframe_kat[var],
                 rownames=['isAlive'], 
@@ -81,6 +81,5 @@ def create_crosstabs_for_significant_vars(dummies):
             print(f"\nLaTeX code for {var} table:")
             print(latex_table)
 
-# Create cross-tabulations for significant title and house dummy variables
 create_crosstabs_for_significant_vars(title_dummies)
 create_crosstabs_for_significant_vars(house_dummies)

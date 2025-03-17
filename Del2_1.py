@@ -7,18 +7,15 @@ fil = "game_of_thrones_train.csv"
 data = pd.read_csv(fil)
 dataframe = pd.DataFrame(data)
 
-#dummy variabler for "title" og "house"
 title_dummies = pd.get_dummies(dataframe["title"], prefix="title", drop_first=False)
 house_dummies = pd.get_dummies(dataframe["house"], prefix="house", drop_first=False)
 
-#deler opp alder inni i de gruppene 
 age_delt = [0,15,25,40,60,85,np.inf]
 age_label = ["1-15",'16-25', '26-40', '41-60', '61-85', '86+']
 dataframe["age_deler"] = pd.cut(dataframe["age"], bins = age_delt, labels=age_label, right=False)
 
 age_dummies = pd.get_dummies(dataframe["age_deler"], prefix="age", drop_first=True)
 
-#for filtre ut alle forekomninger av tittel og house som er under 20 tilfeller
 def filter_dummies(dummies, threshold=20):
     signifikant_dummies = []
     for var in dummies.columns:
@@ -26,11 +23,10 @@ def filter_dummies(dummies, threshold=20):
             signifikant_dummies.append(var)
     return signifikant_dummies
 
-#bruke filtret på dummiesene mine:
 signifikant_title_dummies = filter_dummies(title_dummies)
 signifikant_house_dummies = filter_dummies(house_dummies)
 
-# Legge sammen alle variablene sammen, slik at jeg kan tilpasse modell 
+# Legge sammen alle variablene sammen, slik at jeg kan tilpasse modellen  
 X = pd.concat([dataframe[["isNoble", "male"]],
                title_dummies[signifikant_title_dummies],
                house_dummies[signifikant_house_dummies],
